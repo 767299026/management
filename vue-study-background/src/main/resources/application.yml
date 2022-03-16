@@ -1,0 +1,43 @@
+server:
+  port: 8484
+  servlet:
+    encoding:
+      #SpingBoot内置了CharacterEncodingFilter编码过滤，默认为ISO-8859-1
+      enabled: true
+      #设置CharacterEncodingFilter编码格式为UTF-8
+      charset: utf-8
+      force: true
+    context-path: /vue
+
+  ssl:
+    key-store: classpath:xian-yun.xyz.jks
+    key-store-type: JKS
+    key-alias: xian-yun.xyz
+    key-store-password: u9q3q576o13l0hc
+    key-password: u9q3q576o13l0hc
+
+spring:
+  profiles:
+    #启用database.yml配置
+    active: database
+
+  mvc:
+    pathmatch:
+      #swagger配置
+      matching-strategy: ant_path_matcher
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: xyz.lsl.vue.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+yiqu:
+  jwt:
+    # 部署上线务必修改此配置，以保证token的安全性
+    secret: YIQU!@#$%^&*767299026
+    expire: 172800
+    header: token
+
+
