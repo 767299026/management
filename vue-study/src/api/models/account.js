@@ -5,4 +5,5 @@ export default {
     login(params) {
         return axios.post('/login',params)
     },
+
 }

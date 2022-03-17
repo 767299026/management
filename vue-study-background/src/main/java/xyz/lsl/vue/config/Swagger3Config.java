@@ -29,7 +29,7 @@ public class Swagger3Config implements WebMvcConfigurer {
                 //.enable(flag)
                 .select()
                 //通过apis方法配置要扫描的controller的位置
-                .apis(RequestHandlerSelectors.basePackage("blog.controller"))
+                .apis(RequestHandlerSelectors.basePackage("xyz.lsl.vue.controller"))
                 //通过paths方法配置路径
                 .paths(PathSelectors.any())
                 //设置需要排除的路径(如果需要)
@@ -42,7 +42,7 @@ public class Swagger3Config implements WebMvcConfigurer {
                         //设置版本号
                         .version("1.0")
                         //设置文档抬头
-                        .title("YIQU的个人博客文档")
+                        .title("YIQU的vue项目文档")
                         //设置授权
                         .license("License By YIQU")
                         //设置授权访问网址

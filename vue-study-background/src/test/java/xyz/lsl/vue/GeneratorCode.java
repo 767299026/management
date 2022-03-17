@@ -23,10 +23,10 @@ public class GeneratorCode {
         String moduleName = "vue";
 
         List<String> tableName = new ArrayList<>();//表名
-        /*tableName.add("chat_msg");
-        tableName.add("friends_request");
-        tableName.add("my_friends");*/
-        tableName.add("user");
+        //tableName.add("chat_msg");
+        //tableName.add("friends_request");
+        //tableName.add("my_friends");
+        tableName.add("permission");
 
         String logicDelete = "";
 

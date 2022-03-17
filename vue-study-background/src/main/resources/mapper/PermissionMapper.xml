@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.lsl.vue.mapper.PermissionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="xyz.lsl.vue.entity.Permission">
+        <id column="ps_id" property="psId" />
+        <result column="ps_name" property="psName" />
+        <result column="ps_pid" property="psPid" />
+        <result column="ps_c" property="psC" />
+        <result column="ps_a" property="psA" />
+        <result column="ps_level" property="psLevel" />
+    </resultMap>
+
+    <resultMap id="getMenusVoMap" type="xyz.lsl.vue.common.vo.getMenusVo">
+        <id column="ps_id" property="id" />
+        <result column="ps_name" property="authName" />
+        <result column="ps_api_path" property="paths" />
+        <result column="ps_api_order" property="oder" />
+    </resultMap>
+
+    <select id="getLevelOne" resultMap="getMenusVoMap">
+        SELECT main.ps_id,ps_name,ps_api_path,ps_api_order
+        FROM permission_api as api LEFT JOIN permission as main ON main.ps_id = api.ps_id
+        WHERE main.ps_level=1 ORDER BY api.ps_api_order
+    </select>
+
+    <select id="getLevelTwo" resultMap="getMenusVoMap">
+        SELECT main.ps_id,ps_name,ps_api_path,ps_api_order
+        FROM permission_api as api LEFT JOIN permission as main ON main.ps_id = api.ps_id
+        WHERE main.ps_level=2 and main.ps_pid = #{ps_pid}
+    </select>
+
+
+</mapper>

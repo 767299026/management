@@ -5,7 +5,11 @@ let instance = axios.create({
     timeout:5000
 })
 
-instance.interceptors.request.use()
+/*前置拦截*/
+instance.interceptors.request.use(config => {
+    config.headers.Authorization = window.localStorage.getItem("token")
+    return config
+})
 
 instance.interceptors.response.use()
 
