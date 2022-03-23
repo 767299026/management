@@ -6,8 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -19,8 +18,7 @@ import java.io.Serializable;
  * @author YIQU
  * @since 2022-03-17 12:16:25
  */
-@Getter
-@Setter
+@Data
 @TableName("permission")
 @ApiModel(value = "Permission对象", description = "权限表")
 public class Permission implements Serializable {

@@ -4,11 +4,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -16,10 +17,9 @@ import lombok.Setter;
  * </p>
  *
  * @author YIQU
- * @since 2022-03-16 11:31:18
+ * @since 2022-03-18 13:13:49
  */
-@Getter
-@Setter
+@Data
 @TableName("user")
 @ApiModel(value = "User对象", description = "")
 public class User implements Serializable {
@@ -29,11 +29,31 @@ public class User implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    @TableField("username")
+    private String username;
+
     @TableField("password")
     private String password;
 
-    @TableField("username")
-    private String username;
+    @TableField("avatar")
+    private String avatar;
+
+    @TableField("email")
+    private String email;
+
+    @TableField("status")
+    private Integer status;
+
+    @TableField("create_time")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime createTime;
+
+    @TableField("update_time")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime updateTime;
+
+    @TableField("role")
+    private String role;
 
 
 }

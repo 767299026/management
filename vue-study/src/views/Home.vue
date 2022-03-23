@@ -54,6 +54,8 @@
 </template>
 
 <script>
+import {Message} from "element-ui";
+
 export default {
   name: "Home",
   data() {
@@ -78,6 +80,7 @@ export default {
     getMenuList() {
       this.$axios.getMenuList().then((res) =>{
         this.menuList = res.data.data
+        Message.success(res.data.msg)
       })
     },
     changeCollapsed(){

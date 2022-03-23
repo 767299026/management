@@ -18,8 +18,8 @@ public class ResultUtil implements Serializable {
     private Object data;
 
 
-    public static ResultUtil success(Object data){
-        return new ResultUtil(true,200,"success",data);
+    public static ResultUtil success(String msg, Object data){
+        return new ResultUtil(true,200,msg,data);
     }
 
     public static ResultUtil fail(int code, String msg){

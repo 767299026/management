@@ -26,7 +26,7 @@ public class PermissionController {
 
     @GetMapping("/menus")
     public ResultUtil getMenus(){
-        return ResultUtil.success(permissionService.getMenus());
+        return ResultUtil.success("获取菜单列表成功",permissionService.getMenus());
     }
 
 }

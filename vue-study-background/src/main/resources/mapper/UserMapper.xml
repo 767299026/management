@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.lsl.vue.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="xyz.lsl.vue.entity.User">
+        <id column="id" property="id" />
+        <result column="password" property="password" />
+        <result column="username" property="username" />
+        <result column="email" property="email" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="role" property="role" />
+    </resultMap>
+
+    <select id="getUserList" resultType="xyz.lsl.vue.common.vo.getUserListVo">
+        select id, username, avatar, email, status, create_time, update_time,role from user
+        order by role = 'root' DESC , create_time
+    </select>
+
+    <select id="getUserListByUsername" resultType="xyz.lsl.vue.common.vo.getUserListVo">
+        select id, username, avatar, email, status, create_time, update_time, role from user
+        where username like concat('%',#{username},'%')
+        order by role = 'root' DESC , create_time
+    </select>
+
+</mapper>

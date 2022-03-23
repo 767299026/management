@@ -1,7 +1,11 @@
 package xyz.lsl.vue.service;
 
-import xyz.lsl.vue.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.transaction.annotation.Transactional;
+import xyz.lsl.vue.common.vo.getUserListVo;
+import xyz.lsl.vue.entity.User;
+
+import java.util.List;
 
 /**
  * <p>
@@ -9,8 +13,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author YIQU
- * @since 2022-03-16 11:31:18
+ * @since 2022-03-18 13:13:49
  */
+@Transactional
 public interface UserService extends IService<User> {
 
+    List<getUserListVo> getUserList();
+
+    List<getUserListVo> getUserListByUsername(String username);
 }

@@ -7,6 +7,7 @@ import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/global.css'
 import './assets/fonts/iconfont.css'
+import './utils/directive'
 
 
 Vue.config.productionTip = false

@@ -1,5 +1,6 @@
 package xyz.lsl.vue.controller;
 
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,11 +30,11 @@ public class AccountController {
         queryWrapper.eq(User::getUsername,loginDto.getUsername());
         User user = userService.getOne(queryWrapper);
         Assert.notNull(user,"没有该用户");
-        if(!user.getPassword().equals(loginDto.getPassword()))
+        if(!user.getPassword().equals(SecureUtil.md5(loginDto.getPassword())))
             return ResultUtil.fail("密码错误");
         String token = jwtUtil.generateToken(user.getId(),user.getUsername());
         response.setHeader("Authorization", token);
         response.setHeader("Access-Control-Expose-Headers", "Authorization");
-        return ResultUtil.success(user);
+        return ResultUtil.success("登录成功",user);
     }
 }

@@ -26,7 +26,7 @@ public class GeneratorCode {
         //tableName.add("chat_msg");
         //tableName.add("friends_request");
         //tableName.add("my_friends");
-        tableName.add("permission");
+        tableName.add("user");
 
         String logicDelete = "";
 

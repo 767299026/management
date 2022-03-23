@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import Element from "element-ui";
+import {Message} from "element-ui";
 
 export default {
   name: "Login",
@@ -41,51 +41,25 @@ export default {
       },
       loginFormRules: {//表单验证规则
         username: [
-          {
-            required: true,
-            message: "请输入正确的用户名",
-            trigger: "blur"
-          },
-          {
-            min: 3,
-            max: 12,
-            message: "长度在3-12个字符",
-            trigger: "blur"
-          }
+            { required: true, message: "请输入正确的用户名", trigger: "blur"},
+            { min: 3, max: 12, message: "长度在3-12个字符", trigger: "blur"}
         ],
         password: [
-          {
-            required: true,
-            message: "请输入正确的密码",
-            trigger: "blur"
-          },
-          {
-            min: 6,
-            max: 15,
-            message: "长度在6-15个字符",
-            trigger: "blur"
-          }
+            { required: true, message: "请输入正确的密码", trigger: "blur"},
+            { min: 6, max: 15, message: "长度在6-15个字符", trigger: "blur"}
         ]
       }
     };
   },
   methods: {
-    resetLoginForm() {
+    resetLoginForm() {//清除登录表单
       this.$refs.loginFormRef.resetFields();
     },
-    login() {
+    login() {//axios登录请求
       this.$refs.loginFormRef.validate(valid =>{
         if (!valid) return;
           this.$axios.login(this.loginForm).then((res) => {
-          if (res.data.code !== 200) {
-            Element.Message({
-              message: res.data.msg,
-              type: 'error',
-              duration: 2 * 1000
-            })
-            this.resetLoginForm();
-            return false;
-          }
+          Message.success(res.data.msg)
           const token = res.headers['authorization']
           window.localStorage.setItem("token",token)
           const userInfo = res.data.data
