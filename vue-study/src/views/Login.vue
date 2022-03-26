@@ -11,11 +11,11 @@
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" label-width="0px" class="login_form">
           <!--用户名-->
           <el-form-item prop="username">
-            <el-input v-model="loginForm.username" prefix-icon="el-icon-user-solid"></el-input>
+            <el-input v-model="loginForm.username" prefix-icon="el-icon-user-solid"/>
           </el-form-item>
           <!--密码-->
           <el-form-item prop="password">
-            <el-input v-model="loginForm.password" prefix-icon="el-icon-lock" type="password"></el-input>
+            <el-input v-model="loginForm.password" prefix-icon="el-icon-lock" type="password"/>
           </el-form-item>
           <!--按钮-->
           <el-form-item class="btns">
@@ -61,10 +61,9 @@ export default {
           this.$axios.login(this.loginForm).then((res) => {
           Message.success(res.data.msg)
           const token = res.headers['authorization']
-          window.localStorage.setItem("token",token)
-          const userInfo = res.data.data
-          window.sessionStorage.setItem("userInfo",userInfo)
-          this.$router.push("/home");
+            window.localStorage.setItem("token", token)
+            window.sessionStorage.setItem("userInfo", JSON.stringify(res.data.data))
+            this.$router.push("/home");
         })
       });
     }

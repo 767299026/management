@@ -9,6 +9,5 @@ public class addUserVo {
     private String password;
     private String email;
     private Integer status;
-    private boolean admin;
 
 }

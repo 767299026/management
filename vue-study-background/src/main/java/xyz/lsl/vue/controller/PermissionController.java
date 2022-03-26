@@ -25,8 +25,17 @@ public class PermissionController {
     private PermissionService permissionService;
 
     @GetMapping("/menus")
-    public ResultUtil getMenus(){
-        return ResultUtil.success("获取菜单列表成功",permissionService.getMenus());
+    public ResultUtil getMenus() {
+        return ResultUtil.success("获取菜单列表成功", permissionService.getMenus());
     }
 
+    @GetMapping("/rights/list")
+    public ResultUtil getRightsList() {
+        return ResultUtil.success("获取权限列表成功", permissionService.getRightsList());
+    }
+
+    @GetMapping("/rights/tree")
+    public ResultUtil getRightsTree() {
+        return ResultUtil.success("获取权限列表成功", permissionService.getRightsTree());
+    }
 }

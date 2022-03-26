@@ -19,10 +19,14 @@ export default {
     },
     /*编辑用户*/
     editUser(params) {
-        return axios.put('/user/edit',params)
+        return axios.put('/user/edit', params)
     },
     /*删除用户*/
     deleteUser(id) {
-        return axios.delete('/user/delete/'+id)
+        return axios.delete('/user/delete/' + id)
     },
+    /*分配用户角色*/
+    allotRole(params, roleId) {
+        return axios.put('/user/allotRole', {userInfo: params, roleId})
+    }
 }

@@ -1,5 +1,6 @@
 <template>
   <div id="user">
+    <!--面包屑导航栏-->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>用户管理</el-breadcrumb-item>
@@ -23,24 +24,30 @@
         <el-table-column label="昵称" prop="username"/>
         <el-table-column label="邮箱" prop="email"/>
         <el-table-column label="头像">
-          <template slot-scope="scope">
-            <img :src="scope.row.avatar" alt="头像" width="50px" height="50px" class="el-avatar--large" >
+          <template v-slot="scope">
+            <img :src="scope.row.avatar" alt="头像" width="50px" height="50px" class="el-avatar--large">
           </template>
         </el-table-column>
         <el-table-column label="创建时间" prop="createTime"/>
         <el-table-column label="修改时间" prop="updateTime"/>
-        <el-table-column label="用户权限" prop="role"/>
+        <el-table-column label="用户角色" prop="role"/>
         <el-table-column label="是否禁用">
-          <template slot-scope="scope">
-            <el-switch v-model="scope.row.status" :active-value="0" :inactive-value="1" @change="changeStatus(scope.row.id)"/>
+          <template v-slot="scope">
+            <el-switch v-model="scope.row.status" :active-value="0" :inactive-value="1"
+                       @change="changeStatus(scope.row.id)"/>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
-          <template slot-scope="scope">
+        <el-table-column label="操作" width="200px">
+          <template v-slot="scope">
             <!--修改按钮-->
-            <el-button type="primary" icon="el-icon-edit" size="mini" title="编辑" @click="showEditUserDialogVisible(scope.row.id)"/>
+            <el-button type="primary" icon="el-icon-edit" size="mini" title="编辑"
+                       @click="showEditUserDialogVisible(scope.row.id)"/>
             <!--删除按钮-->
-            <el-button type="danger" icon="el-icon-delete" size="mini" title="删除" @click="confirmDelete(scope.row.id)"/>
+            <el-button type="danger" icon="el-icon-delete" size="mini" title="删除"
+                       @click="confirmDeleteUser(scope.row.id)"/>
+            <!--分配角色按钮-->
+            <el-button type="warning" icon="el-icon-setting" size="mini" title="分配角色"
+                       @click="showDistributeDialogVisible(scope.row)"/>
           </template>
         </el-table-column>
       </el-table>
@@ -57,7 +64,7 @@
 
     <!--添加用户对话框-->
     <el-dialog title="添加用户" :visible.sync="addUserDialogVisible" width="50%" @click="resetAddUserForm()">
-      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">
+      <el-form :model="addForm" :rules="addFormRules" ref="addUserFormRef" label-width="70px">
         <el-form-item label="用户名" prop="username">
           <el-input v-model="addForm.username"/>
         </el-form-item>
@@ -66,9 +73,6 @@
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="addForm.email" @blur="checkEmailFormat"/>
-        </el-form-item>
-        <el-form-item label="是否设置为管理员" label-width="125px" prop="admin">
-          <el-switch v-model="addForm.admin" :active-value="true" :inactive-value="false"/>
         </el-form-item>
         <el-form-item label="是否禁用" prop="status">
           <el-switch v-model="addForm.status" :active-value="0" :inactive-value="1"/>
@@ -82,8 +86,8 @@
 
     <!--编辑用户对话框-->
     <el-dialog title="编辑用户" :visible.sync="editUserDialogVisible" width="50%" @click="resetEditUserForm()">
-      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
-        <el-form-item label="用户id">
+      <el-form :model="editForm" :rules="editFormRules" ref="editUserFormRef" label-width="70px">
+        <el-form-item label="userId">
           <el-input v-model="editForm.id" disabled/>
         </el-form-item>
         <el-form-item label="用户名" prop="username">
@@ -95,15 +99,31 @@
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="editForm.email" @blur="checkEmailFormat"/>
         </el-form-item>
-        <el-form-item label="是否设置为管理员" label-width="125px" prop="role">
-          <el-switch v-model="editForm.role" :active-value="'root'" :inactive-value="'visitor'" @click.native="confirmPermission(editForm.role)"/>
-        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="editUserDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="editUser()">确 定</el-button>
       </span>
     </el-dialog>
+
+    <!--分配角色对话框-->
+    <el-dialog title="编辑用户" :visible.sync="distributeDialogVisible" width="50%"
+               @close="userInfo = {};roleList = [];selectedRoleId = ''">
+      <div>
+        <p>当前的用户：{{ userInfo.username }}</p>
+        <p>当前的角色：{{ userInfo.role }}</p>
+        <p>分配角色：
+          <el-select v-model="selectedRoleId" placeholder="请选择">
+            <el-option v-for="item in roleList" :key="item.roleId" :label="item.roleName" :value="item.roleId"/>
+          </el-select>
+        </p>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="distributeDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="confirmAllotRole()">确 定</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -130,7 +150,6 @@ export default {
         username: '',
         password: '',
         email: '',
-        admin: false,
         status: '1'
       },
       addFormRules: {//添加用户表单验证规则
@@ -152,17 +171,20 @@ export default {
         username: '',
         email: '',
         avatar: '',
-        role: ''
       },
       editFormRules: {//编辑用户信息表单验证规则
         username: [
-          { required: true, message: '请输入正确的用户名', trigger: 'blur'},
-          { min: 3, max: 12, message: "长度在3-12个字符", trigger: "blur"}
+          {required: true, message: '请输入正确的用户名', trigger: 'blur'},
+          {min: 3, max: 12, message: "长度在3-12个字符", trigger: "blur"}
         ],
         email: [
-          { required: true, message: '请输入正确的邮箱格式', trigger: 'blur'}
+          {required: true, message: '请输入正确的邮箱格式', trigger: 'blur'}
         ]
-      }
+      },
+      distributeDialogVisible: false,//分配角色对话框
+      roleList: [],//已有的角色列表
+      userInfo: {},//分配角色的用户当前信息
+      selectedRoleId: ''
     }
   },
   methods: {
@@ -194,10 +216,10 @@ export default {
       }
     },
     resetAddUserForm() {//重置添加用户对话框数据
-      this.$refs.addFormRef.resetFields()
+      this.$refs.addUserFormRef.resetFields()
     },
     addUser() {//axios添加用户请求
-      this.$refs.addFormRef.validate(valid => {
+      this.$refs.addUserFormRef.validate(valid => {
         if (!valid) return
         this.$axios.addUser(this.addForm).then((res) => {
           this.addUserDialogVisible = false
@@ -207,37 +229,8 @@ export default {
       })
     },
     resetEditUserForm() {//重置编辑用户对话框数据
-      if (this.$refs.editFormRef !== undefined)
-        this.$refs.editFormRef.resetFields()
-    },
-    confirmPermission(role) {//提示编辑用户权限操作警告
-      const strOpen = '正在执行权限操作，确认赋予该用户管理员权限？'
-      const strClose = '正在执行权限操作，确认取消该用户管理员权限？'
-      if(role === 'root') {
-        this.$confirm(strOpen,'提示',{
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.editForm.role = 'root'
-        }).catch(action => {
-          if (action === 'cancel'){
-            this.editForm.role = 'visitor'
-          }
-        })
-      } else {
-        this.$confirm(strClose,'提示',{
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.editForm.role = 'visitor'
-        }).catch(action => {
-          if (action === 'cancel'){
-            this.editForm.role = 'root'
-          }
-        })
-      }
+      if (this.$refs.editUserFormRef !== undefined)
+        this.$refs.editUserFormRef.resetFields()
     },
     showEditUserDialogVisible(userId) {//axios获取用户对话框信息
       this.resetEditUserForm()
@@ -248,7 +241,7 @@ export default {
       })
     },
     editUser() {//axios编辑用户信息请求
-      this.$refs.editFormRef.validate(valid => {
+      this.$refs.editUserFormRef.validate(valid => {
         if (!valid) return
         this.$axios.editUser(this.editForm).then((res) => {
           this.editUserDialogVisible = false
@@ -257,8 +250,8 @@ export default {
         })
       })
     },
-    confirmDelete(id) {//删除用户操作
-      this.$confirm("该操作不可逆，确认移除该用户？",'删除操作',{
+    confirmDeleteUser(id) {//删除用户操作
+      this.$confirm("该操作不可逆，确认移除该用户？", '删除操作', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -268,8 +261,34 @@ export default {
           Message.success(res.data.msg)
         })
       }).catch(action => {
-        if (action === 'cancel'){
+        if (action === 'cancel') {
           Message.info("取消了移除操作")
+        }
+      })
+    },
+    showDistributeDialogVisible(userInfo) {//分配角色对话框
+      this.userInfo = userInfo
+      this.$axios.getRolesName().then((res) => {
+        this.roleList = res.data.data
+      })
+      this.distributeDialogVisible = true
+    },
+    confirmAllotRole() {
+      this.$confirm("确认分配给该用户此角色？", '分配角色', {
+        confirmButtonText: '确认',
+        cancelButtonText: '再想想',
+        type: 'warning'
+      }).then(() => {
+        if (!this.selectedRoleId)
+          return Message.error("请选择分配的角色")
+        this.$axios.allotRole(this.userInfo, this.selectedRoleId).then((res) => {
+          this.getUserList()
+          this.distributeDialogVisible = false
+          Message.success(res.data.msg)
+        })
+      }).catch(action => {
+        if (action === 'cancel') {
+          Message.info("取消了分配角色")
         }
       })
     }

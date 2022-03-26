@@ -3,6 +3,8 @@ package xyz.lsl.vue.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.transaction.annotation.Transactional;
 import xyz.lsl.vue.common.vo.getMenusVo;
+import xyz.lsl.vue.common.vo.getRightsListVo;
+import xyz.lsl.vue.common.vo.getRightsTreeVo;
 import xyz.lsl.vue.entity.Permission;
 
 import java.util.List;
@@ -19,4 +21,9 @@ import java.util.List;
 public interface PermissionService extends IService<Permission> {
 
     List<getMenusVo> getMenus();
+
+    List<getRightsListVo> getRightsList();
+
+    List<getRightsTreeVo> getRightsTree();
+
 }

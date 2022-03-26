@@ -8,10 +8,10 @@ import java.util.List;
 @Data
 public class getMenusVo {
 
-    Integer id;
-    String authName;
-    String paths;
-    String oder;
-    List<getMenusVo> children = new ArrayList<>();//二级菜单
+    private Integer id;
+    private String authName;
+    private String paths;
+    private String oder;
+    private List<getMenusVo> children = new ArrayList<>();//二级菜单
 
 }

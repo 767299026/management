@@ -3,6 +3,8 @@ package xyz.lsl.vue.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import xyz.lsl.vue.common.vo.getMenusVo;
+import xyz.lsl.vue.common.vo.getRightsListVo;
+import xyz.lsl.vue.common.vo.getRightsTreeVo;
 import xyz.lsl.vue.entity.Permission;
 import xyz.lsl.vue.mapper.PermissionMapper;
 import xyz.lsl.vue.service.PermissionService;
@@ -27,11 +29,30 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     @Override
     public List<getMenusVo> getMenus() {
         List<getMenusVo> menusVoList = permissionMapper.getLevelOne();//获取一级菜单
-        for(getMenusVo menusVo : menusVoList) {
+        for (getMenusVo menusVo : menusVoList) {
             menusVo.setChildren(permissionMapper.getLevelTwo(menusVo.getId().toString()));//填充children二级菜单
         }
         return menusVoList;
     }
 
+    @Override
+    public List<getRightsListVo> getRightsList() {
+        return permissionMapper.getRightsList();
+    }
 
+    @Override
+    public List<getRightsTreeVo> getRightsTree() {
+        List<String> level1 = permissionMapper.getAllPermission(1);//数据库全部一级权限
+        List<String> level2 = permissionMapper.getAllPermission(2);//数据库全部二级权限
+        List<String> level3 = permissionMapper.getAllPermission(3);//数据库全部三级权限
+        List<getRightsTreeVo> tops = permissionMapper.getPermissionTops(level1);
+        for (getRightsTreeVo top : tops) {//遍历一级权限
+            List<getRightsTreeVo.permission> permissions = permissionMapper.getPermissions(level2, top.getId());//获取二级权限
+            for (getRightsTreeVo.permission permission : permissions) {//遍历二级权限
+                permission.setChildren(permissionMapper.getChildren(level3, permission.getId()));//获取并填充三级权限
+            }
+            top.setChildren(permissions);//填充二级权限
+        }
+        return tops;
+    }
 }

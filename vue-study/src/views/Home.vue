@@ -8,12 +8,12 @@
           <span class="head_font">电商后台管理系统</span>
         </div>
         <!--头像区域-->
-<!--        <el-dropdown>
-          <el-avatar size="45px" shape="circle" fit="contain"></el-avatar>
+        <el-dropdown>
+          <el-avatar :src="UserInfo.avatar" shape="circle" fit="contain"></el-avatar>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item icon="ali-iconfont icon-logout">退出</el-dropdown-item>
+            <el-dropdown-item icon="ali-iconfont icon-logout" @click="">退出</el-dropdown-item>
           </el-dropdown-menu>
-        </el-dropdown>-->
+        </el-dropdown>
       </el-header>
       <el-container>
         <!--侧边栏区域-->
@@ -69,12 +69,14 @@ export default {
         '145': 'iconfont icon-baobiao'
       },
       isCollapsed: false,
-      activePath: ''
+      activePath: '',
+      UserInfo: {}
     }
   },
   created() {
     this.getMenuList()
     this.activePath = window.sessionStorage.getItem("activePath")
+    this.UserInfo = JSON.parse(window.sessionStorage.getItem("userInfo"))
   },
   methods: {
     getMenuList() {

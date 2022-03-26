@@ -9,5 +9,4 @@ public class UserInfoVo {
     private String username;
     private String avatar;
     private String email;
-    private String role;
 }

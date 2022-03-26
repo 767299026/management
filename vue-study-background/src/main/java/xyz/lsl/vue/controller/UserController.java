@@ -3,6 +3,7 @@ package xyz.lsl.vue.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.crypto.SecureUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -10,8 +11,11 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import xyz.lsl.vue.common.vo.UserInfoVo;
 import xyz.lsl.vue.common.vo.addUserVo;
+import xyz.lsl.vue.common.vo.allotRoleVo;
 import xyz.lsl.vue.common.vo.getUserListVo;
+import xyz.lsl.vue.entity.Role;
 import xyz.lsl.vue.entity.User;
+import xyz.lsl.vue.service.RoleService;
 import xyz.lsl.vue.service.UserService;
 import xyz.lsl.vue.util.ResultUtil;
 
@@ -36,14 +40,17 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private RoleService roleService;
+
     @GetMapping("/users")
-    public ResultUtil getUserList(@RequestParam(defaultValue = "1")Integer currentPage,
-                                  @RequestParam(defaultValue = "4")Integer pageSize,
-                                  String query){
-        if(currentPage < 1 || pageSize < 1)
-            return  ResultUtil.fail("参数不合法，非法攻击将被封禁 IP");
+    public ResultUtil getUserList(@RequestParam(defaultValue = "1") Integer currentPage,
+                                  @RequestParam(defaultValue = "4") Integer pageSize,
+                                  String query) {
+        if (currentPage < 1 || pageSize < 1)
+            return ResultUtil.fail("参数不合法，非法攻击将被封禁 IP");
         List<getUserListVo> list;
-        if(StringUtils.isNotBlank(query))
+        if (StringUtils.isNotBlank(query))
             list = userService.getUserListByUsername(query);
         else
             list = userService.getUserList();
@@ -80,47 +87,60 @@ public class UserController {
             return  ResultUtil.fail("参数不合法，非法攻击将被封禁 IP");
         User user = userService.getById(id);
         Assert.notNull(user,"没有该用户，请联系管理员");
-        if(user.getRole().equals("root"))
-            return ResultUtil.fail("禁止禁用此用户");
         if (user.getStatus()==0)
             user.setStatus(1);
         else
             user.setStatus(0);
+        user.setUpdateTime(LocalDateTime.now());
         userService.saveOrUpdate(user);
         return ResultUtil.success("更新用户状态成功",null);
     }
 
     @PostMapping("/add")
-    public ResultUtil addUser(@RequestBody addUserVo addUserVo){
-        User user = new User();
+    public ResultUtil addUser(@RequestBody addUserVo addUserVo) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getUsername, addUserVo.getUsername());
+        User user = userService.getOne(queryWrapper);
+        if (user != null)
+            return ResultUtil.fail("用户名已存在");
+        user = new User();
         addUserVo.setPassword(SecureUtil.md5(addUserVo.getPassword()));
-        BeanUtils.copyProperties(addUserVo,user);
-        if(addUserVo.isAdmin())
-            user.setRole("root");
-        else
-            user.setRole("visitor");
+        BeanUtils.copyProperties(addUserVo, user);
+        //默认无角色
+        user.setRole("null");
         //默认头像
         user.setAvatar("https://cdn.jsdelivr.net/gh/767299026/CDN/blog/githubLogo.webp");
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
         userService.save(user);
-        return ResultUtil.success("新增用户成功",null);
+        return ResultUtil.success("新增用户成功", null);
     }
 
     @PutMapping("/edit")
     public ResultUtil editUser(@RequestBody UserInfoVo editUserVo){
         User user = userService.getById(editUserVo.getId());
-        Assert.notNull(user);
-        BeanUtil.copyProperties(editUserVo,user,"id");
+        Assert.notNull(user, "用户不存在，请重新获取");
+        BeanUtil.copyProperties(editUserVo, user, "id");
         user.setUpdateTime(LocalDateTime.now());
         userService.saveOrUpdate(user);
-        return ResultUtil.success("修改用户信息成功",null);
+        return ResultUtil.success("修改用户信息成功", null);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResultUtil deleteUser(@PathVariable(name = "id")Integer id){
+    public ResultUtil deleteUser(@PathVariable(name = "id") Integer id) {
         userService.removeById(id);
-        return ResultUtil.success("已移除该用户",null);
+        return ResultUtil.success("已移除该用户", null);
+    }
+
+    @PutMapping("/allotRole")
+    public ResultUtil allotRole(@RequestBody allotRoleVo allotRoleVo) {
+        User user = allotRoleVo.getUserInfo();
+        Role role = roleService.getById(allotRoleVo.getRoleId());
+        Assert.notNull(role, "该角色不存在，请重新获取");
+        user.setRole(role.getRoleName());
+        user.setUpdateTime(LocalDateTime.now());
+        userService.saveOrUpdate(user);
+        return ResultUtil.success("分配角色权限成功", null);
     }
 }
 

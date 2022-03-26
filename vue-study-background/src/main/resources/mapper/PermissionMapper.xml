@@ -9,26 +9,100 @@
         <result column="ps_pid" property="psPid" />
         <result column="ps_c" property="psC" />
         <result column="ps_a" property="psA" />
-        <result column="ps_level" property="psLevel" />
+        <result column="ps_level" property="psLevel"/>
     </resultMap>
 
     <resultMap id="getMenusVoMap" type="xyz.lsl.vue.common.vo.getMenusVo">
-        <id column="ps_id" property="id" />
-        <result column="ps_name" property="authName" />
-        <result column="ps_api_path" property="paths" />
-        <result column="ps_api_order" property="oder" />
+        <id column="ps_id" property="id"/>
+        <result column="ps_name" property="authName"/>
+        <result column="ps_api_path" property="paths"/>
+        <result column="ps_api_order" property="oder"/>
+    </resultMap>
+
+    <resultMap id="getRightsListVoMap" type="xyz.lsl.vue.common.vo.getRightsListVo">
+        <id column="ps_id" property="id"/>
+        <result column="ps_name" property="authName"/>
+        <result column="ps_api_path" property="paths"/>
+        <result column="ps_level" property="level"/>
+        <result column="ps_pid" property="pid"/>
+    </resultMap>
+
+    <resultMap id="getRolesVoPermissionTopMap" type="xyz.lsl.vue.common.vo.getRightsTreeVo">
+        <id column="ps_id" property="id"/>
+        <result column="ps_name" property="authName"/>
+        <result column="ps_api_path" property="paths"/>
+    </resultMap>
+
+    <resultMap id="getRolesVoPermissionMap" type="xyz.lsl.vue.common.vo.getRightsTreeVo$permission">
+        <id column="ps_id" property="id"/>
+        <result column="ps_name" property="authName"/>
+        <result column="ps_api_path" property="paths"/>
+    </resultMap>
+
+    <resultMap id="getRolesVoChildrenMap" type="xyz.lsl.vue.common.vo.getRightsTreeVo$permission$children">
+        <id column="ps_id" property="id"/>
+        <result column="ps_name" property="authName"/>
+        <result column="ps_api_path" property="paths"/>
     </resultMap>
 
     <select id="getLevelOne" resultMap="getMenusVoMap">
-        SELECT main.ps_id,ps_name,ps_api_path,ps_api_order
-        FROM permission_api as api LEFT JOIN permission as main ON main.ps_id = api.ps_id
-        WHERE main.ps_level=1 ORDER BY api.ps_api_order
+        SELECT main.ps_id, ps_name, ps_api_path, ps_api_order
+        FROM permission_api as api
+                 LEFT JOIN permission as main ON main.ps_id = api.ps_id
+        WHERE main.ps_level = 1
+        ORDER BY api.ps_api_order
     </select>
 
     <select id="getLevelTwo" resultMap="getMenusVoMap">
-        SELECT main.ps_id,ps_name,ps_api_path,ps_api_order
-        FROM permission_api as api LEFT JOIN permission as main ON main.ps_id = api.ps_id
-        WHERE main.ps_level=2 and main.ps_pid = #{ps_pid}
+        SELECT main.ps_id, ps_name, ps_api_path, ps_api_order
+        FROM permission_api as api
+                 LEFT JOIN permission as main ON main.ps_id = api.ps_id
+        WHERE main.ps_level = 2
+          and main.ps_pid = #{ps_pid}
+    </select>
+
+    <select id="getRightsList" resultMap="getRightsListVoMap">
+        select main.ps_id, api.id, ps_pid, ps_name, ps_level, ps_api_path
+        from permission as main,
+             permission_api as api
+        where main.ps_id = api.ps_id
+        order by ps_level
+    </select>
+
+    <select id="getAllPermission" resultType="java.lang.String">
+        select ps_id
+        from permission
+        where ps_level = #{level}
+    </select>
+
+    <select id="getPermissionTops" resultMap="getRolesVoPermissionTopMap">
+        select main.ps_id,api.id,ps_name,ps_api_path
+        from permission as main,permission_api as api
+        where main.ps_id = api.ps_id and ps_level = 1
+        and main.ps_id in
+        <foreach collection="tops" item="psId" open="(" close=")" separator=",">
+            #{psId}
+        </foreach>
+    </select>
+
+    <select id="getPermissions" resultMap="getRolesVoPermissionMap">
+        select main.ps_id,api.id,ps_name,ps_api_path
+        from permission as main,permission_api as api
+        where main.ps_id = api.ps_id and ps_level = 2
+        and ps_pid = #{topId} and main.ps_id in
+        <foreach collection="permissions" item="psId" open="(" close=")" separator=",">
+            #{psId}
+        </foreach>
+    </select>
+
+    <select id="getChildren" resultMap="getRolesVoChildrenMap">
+        select main.ps_id,api.id,ps_name,ps_api_path
+        from permission as main,permission_api as api
+        where main.ps_id = api.ps_id and ps_level = 3
+        and ps_pid = #{permissionId} and main.ps_id in
+        <foreach collection="children" item="psId" open="(" close=")" separator=",">
+            #{psId}
+        </foreach>
     </select>
 
 
