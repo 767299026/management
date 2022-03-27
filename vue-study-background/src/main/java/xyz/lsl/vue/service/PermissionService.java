@@ -2,9 +2,9 @@ package xyz.lsl.vue.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.transaction.annotation.Transactional;
-import xyz.lsl.vue.common.vo.getMenusVo;
-import xyz.lsl.vue.common.vo.getRightsListVo;
-import xyz.lsl.vue.common.vo.getRightsTreeVo;
+import xyz.lsl.vue.common.vo.homeVo.getMenusVo;
+import xyz.lsl.vue.common.vo.permissionVo.getRightsListVo;
+import xyz.lsl.vue.common.vo.permissionVo.getRightsTreeVo;
 import xyz.lsl.vue.entity.Permission;
 
 import java.util.List;

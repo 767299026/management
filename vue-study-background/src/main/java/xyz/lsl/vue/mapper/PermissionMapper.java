@@ -2,9 +2,9 @@ package xyz.lsl.vue.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.lsl.vue.common.vo.getMenusVo;
-import xyz.lsl.vue.common.vo.getRightsListVo;
-import xyz.lsl.vue.common.vo.getRightsTreeVo;
+import xyz.lsl.vue.common.vo.homeVo.getMenusVo;
+import xyz.lsl.vue.common.vo.permissionVo.getRightsListVo;
+import xyz.lsl.vue.common.vo.permissionVo.getRightsTreeVo;
 import xyz.lsl.vue.entity.Permission;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package xyz.lsl.vue.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import xyz.lsl.vue.common.vo.getRolesVo;
+import xyz.lsl.vue.common.vo.roleVo.getRolesVo;
 import xyz.lsl.vue.entity.Role;
 
 import java.util.List;

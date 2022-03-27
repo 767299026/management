@@ -9,13 +9,6 @@ server:
       force: true
     context-path: /vue
 
-  ssl:
-    key-store: classpath:xian-yun.xyz.jks
-    key-store-type: JKS
-    key-alias: xian-yun.xyz
-    key-store-password: u9q3q576o13l0hc
-    key-password: u9q3q576o13l0hc
-
 spring:
   profiles:
     #启用database.yml配置

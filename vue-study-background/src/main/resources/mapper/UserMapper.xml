@@ -14,15 +14,31 @@
         <result column="role" property="role" />
     </resultMap>
 
-    <select id="getUserList" resultType="xyz.lsl.vue.common.vo.getUserListVo">
-        select id, username, avatar, email, status, create_time, update_time,role from user
-        order by role = 'root' DESC , create_time
+    <select id="getUserList" resultType="xyz.lsl.vue.common.vo.userVo.getUserListVo">
+        select id,
+               username,
+               avatar,
+               email,
+               status,
+               create_time,
+               update_time,
+               role
+        from user
+        order by create_time
     </select>
 
-    <select id="getUserListByUsername" resultType="xyz.lsl.vue.common.vo.getUserListVo">
-        select id, username, avatar, email, status, create_time, update_time, role from user
-        where username like concat('%',#{username},'%')
-        order by role = 'root' DESC , create_time
+    <select id="getUserListByUsername" resultType="xyz.lsl.vue.common.vo.userVo.getUserListVo">
+        select id,
+               username,
+               avatar,
+               email,
+               status,
+               create_time,
+               update_time,
+               role
+        from user
+        where username like concat('%', #{username}, '%')
+        order by create_time
     </select>
 
 </mapper>

@@ -23,20 +23,19 @@ public class GeneratorCode {
         String moduleName = "vue";
 
         List<String> tableName = new ArrayList<>();//表名
-        //tableName.add("chat_msg");
-        //tableName.add("friends_request");
-        //tableName.add("my_friends");
-        tableName.add("role");
+        /*要生产的表名*/
+        tableName.add("category");
 
         String logicDelete = "";
 
-        FastAutoGenerator.create("jdbc:mysql://"+host+"/"+database+"?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false",
-                        username,password)
-                .globalConfig(builder -> {builder//全局配置
-                        .author("YIQU")//作者
-                        .enableSwagger()//开启swagger
-                        .fileOverride()//覆盖原有文件
-                        .disableOpenDir()
+        FastAutoGenerator.create("jdbc:mysql://" + host + "/" + database + "?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false",
+                        username, password)
+                .globalConfig(builder -> {
+                    builder//全局配置
+                            .author("YIQU")//作者
+                            .enableSwagger()//开启swagger
+                            .fileOverride()//覆盖原有文件
+                            .disableOpenDir()
                         .outputDir(System.getProperty("user.dir")+"/src/main/java")//输出目录
                         .commentDate("yyyy-MM-dd HH:mm:ss");//时间格式
                 })

@@ -1,6 +1,7 @@
-package xyz.lsl.vue.common.vo;
+package xyz.lsl.vue.common.vo.roleVo;
 
 import lombok.Data;
+import xyz.lsl.vue.common.vo.permissionVo.getRightsTreeVo;
 
 import java.util.List;
 

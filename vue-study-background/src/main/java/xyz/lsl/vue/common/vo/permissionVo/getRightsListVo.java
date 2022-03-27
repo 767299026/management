@@ -1,4 +1,4 @@
-package xyz.lsl.vue.common.vo;
+package xyz.lsl.vue.common.vo.permissionVo;
 
 import lombok.Data;
 

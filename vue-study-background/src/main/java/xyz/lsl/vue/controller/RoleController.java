@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
-import xyz.lsl.vue.common.vo.RoleInfo;
+import xyz.lsl.vue.common.vo.roleVo.RoleInfo;
 import xyz.lsl.vue.entity.Role;
 import xyz.lsl.vue.entity.User;
 import xyz.lsl.vue.service.RoleService;

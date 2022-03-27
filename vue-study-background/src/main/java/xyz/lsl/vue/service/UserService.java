@@ -2,7 +2,7 @@ package xyz.lsl.vue.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.transaction.annotation.Transactional;
-import xyz.lsl.vue.common.vo.getUserListVo;
+import xyz.lsl.vue.common.vo.userVo.getUserListVo;
 import xyz.lsl.vue.entity.User;
 
 import java.util.List;

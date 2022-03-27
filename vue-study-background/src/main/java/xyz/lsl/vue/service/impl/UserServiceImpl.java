@@ -2,7 +2,7 @@ package xyz.lsl.vue.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-import xyz.lsl.vue.common.vo.getUserListVo;
+import xyz.lsl.vue.common.vo.userVo.getUserListVo;
 import xyz.lsl.vue.entity.User;
 import xyz.lsl.vue.mapper.UserMapper;
 import xyz.lsl.vue.service.UserService;
