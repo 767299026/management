@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
-import xyz.lsl.vue.common.vo.roleVo.RoleInfo;
+import xyz.lsl.vue.common.vo.roleVo.RoleInfoVo;
 import xyz.lsl.vue.entity.Role;
 import xyz.lsl.vue.entity.User;
 import xyz.lsl.vue.service.RoleService;
@@ -47,9 +47,9 @@ public class RoleController {
 
     @GetMapping("/getRoleInfo/{id}")
     public ResultUtil getRoleInfo(@PathVariable(name = "id") Integer id) {
-        RoleInfo getRoleInfo = new RoleInfo();
-        BeanUtils.copyProperties(roleService.getById(id), getRoleInfo);
-        return ResultUtil.success("获取角色信息成功", getRoleInfo);
+        RoleInfoVo getRoleInfoVo = new RoleInfoVo();
+        BeanUtils.copyProperties(roleService.getById(id), getRoleInfoVo);
+        return ResultUtil.success("获取角色信息成功", getRoleInfoVo);
     }
 
     @PostMapping("/add")

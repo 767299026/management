@@ -12,14 +12,14 @@
         <result column="ps_level" property="psLevel"/>
     </resultMap>
 
-    <resultMap id="getMenusVoMap" type="xyz.lsl.vue.common.vo.homeVo.getMenusVo">
+    <resultMap id="getMenusVoMap" type="xyz.lsl.vue.common.vo.homeVo.MenusVo">
         <id column="ps_id" property="id"/>
         <result column="ps_name" property="authName"/>
         <result column="ps_api_path" property="paths"/>
         <result column="ps_api_order" property="oder"/>
     </resultMap>
 
-    <resultMap id="getRightsListVoMap" type="xyz.lsl.vue.common.vo.permissionVo.getRightsListVo">
+    <resultMap id="getRightsListVoMap" type="xyz.lsl.vue.common.vo.permissionVo.RightsListVo">
         <id column="ps_id" property="id"/>
         <result column="ps_name" property="authName"/>
         <result column="ps_api_path" property="paths"/>
@@ -27,19 +27,19 @@
         <result column="ps_pid" property="pid"/>
     </resultMap>
 
-    <resultMap id="getRolesVoPermissionTopMap" type="xyz.lsl.vue.common.vo.permissionVo.getRightsTreeVo">
+    <resultMap id="getRolesVoPermissionTopMap" type="xyz.lsl.vue.common.vo.permissionVo.RightsTreeVo">
         <id column="ps_id" property="id"/>
         <result column="ps_name" property="authName"/>
         <result column="ps_api_path" property="paths"/>
     </resultMap>
 
-    <resultMap id="getRolesVoPermissionMap" type="xyz.lsl.vue.common.vo.permissionVo.getRightsTreeVo$permission">
+    <resultMap id="getRolesVoPermissionMap" type="xyz.lsl.vue.common.vo.permissionVo.RightsTreeVo$permission">
         <id column="ps_id" property="id"/>
         <result column="ps_name" property="authName"/>
         <result column="ps_api_path" property="paths"/>
     </resultMap>
 
-    <resultMap id="getRolesVoChildrenMap" type="xyz.lsl.vue.common.vo.permissionVo.getRightsTreeVo$permission$children">
+    <resultMap id="getRolesVoChildrenMap" type="xyz.lsl.vue.common.vo.permissionVo.RightsTreeVo$permission$children">
         <id column="ps_id" property="id"/>
         <result column="ps_name" property="authName"/>
         <result column="ps_api_path" property="paths"/>

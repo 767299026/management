@@ -59,7 +59,6 @@
             </el-button>
           </template>
         </el-table-column>
-
       </el-table>
     </el-card>
 
@@ -189,7 +188,7 @@ export default {
     },
     showEditRoleDialogVisible(roleId) {//axios获取角色对话框信息
       this.resetEditRoleForm()
-      this.$axios.getRoleInfo(roleId).then((res) => {
+      this.$axios.getRoleInfoVo(roleId).then((res) => {
         this.editForm = res.data.data
         this.editRoleDialogVisible = true
         Message.success(res.data.msg)

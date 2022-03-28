@@ -13,7 +13,23 @@
         <result column="cat_src" property="catSrc"/>
     </resultMap>
 
-    <resultMap id="getLevelZeroMap" type="xyz.lsl.vue.common.vo.goodsVo.getGoodsCategoriesVo">
+    <resultMap id="getLevelZeroMap" type="xyz.lsl.vue.common.vo.goodsVo.GoodsCategoriesVo">
+        <id column="cat_id" property="categoryId"/>
+        <result column="cat_name" property="categoryName"/>
+        <result column="cat_pid" property="parentId"/>
+        <result column="cat_level" property="categoryLevel"/>
+        <result column="cat_deleted" property="categoryStatus"/>
+    </resultMap>
+
+    <resultMap id="getLevelOneMap" type="xyz.lsl.vue.common.vo.goodsVo.GoodsCategoriesVo$goodsCategories">
+        <id column="cat_id" property="categoryId"/>
+        <result column="cat_name" property="categoryName"/>
+        <result column="cat_pid" property="parentId"/>
+        <result column="cat_level" property="categoryLevel"/>
+        <result column="cat_deleted" property="categoryStatus"/>
+    </resultMap>
+
+    <resultMap id="getLevelTwoMap" type="xyz.lsl.vue.common.vo.goodsVo.GoodsCategoriesVo$goodsCategories$children">
         <id column="cat_id" property="categoryId"/>
         <result column="cat_name" property="categoryName"/>
         <result column="cat_pid" property="parentId"/>
@@ -27,5 +43,18 @@
         where cat_level = 0
     </select>
 
+    <select id="getLevelOne" resultMap="getLevelOneMap">
+        select cat_id, cat_name, cat_pid, cat_level, cat_deleted
+        from category
+        where cat_level = 1
+          and cat_pid = #{pid}
+    </select>
+
+    <select id="getLevelTwo" resultMap="getLevelTwoMap">
+        select cat_id, cat_name, cat_pid, cat_level, cat_deleted
+        from category
+        where cat_level = 2
+          and cat_pid = #{pid}
+    </select>
 
 </mapper>

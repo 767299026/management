@@ -6,7 +6,7 @@ import java.util.List;
 
 
 @Data
-public class getRightsTreeVo {
+public class RightsTreeVo {
 
     private Integer id;
     private String authName;

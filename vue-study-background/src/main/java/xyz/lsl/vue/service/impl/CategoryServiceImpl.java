@@ -2,7 +2,7 @@ package xyz.lsl.vue.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-import xyz.lsl.vue.common.vo.goodsVo.getGoodsCategoriesVo;
+import xyz.lsl.vue.common.vo.goodsVo.GoodsCategoriesVo;
 import xyz.lsl.vue.entity.Category;
 import xyz.lsl.vue.mapper.CategoryMapper;
 import xyz.lsl.vue.service.CategoryService;
@@ -25,7 +25,25 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     private CategoryMapper categoryMapper;
 
     @Override
-    public List<getGoodsCategoriesVo> categories() {
-        return null;
+    public List<GoodsCategoriesVo> categories(Integer type) {
+        List<GoodsCategoriesVo> levelZero = categoryMapper.getLevelZero();//一级分类
+        if (type == 1)
+            return levelZero;
+        List<GoodsCategoriesVo.goodsCategories> levelOne;//二级分类
+        if (type == 2) {
+            for (GoodsCategoriesVo zero : levelZero) {
+                levelOne = categoryMapper.getLevelOne(zero.getCategoryId());
+                zero.setChildren(levelOne);
+            }
+        } else {
+            for (GoodsCategoriesVo zero : levelZero) {
+                levelOne = categoryMapper.getLevelOne(zero.getCategoryId());
+                for (GoodsCategoriesVo.goodsCategories one : levelOne) {
+                    one.setChildren(categoryMapper.getLevelTwo(one.getCategoryId()));//三级分类
+                }
+                zero.setChildren(levelOne);
+            }
+        }
+        return levelZero;
     }
 }

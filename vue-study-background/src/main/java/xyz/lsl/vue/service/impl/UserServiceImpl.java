@@ -2,7 +2,7 @@ package xyz.lsl.vue.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-import xyz.lsl.vue.common.vo.userVo.getUserListVo;
+import xyz.lsl.vue.common.vo.userVo.UserListVo;
 import xyz.lsl.vue.entity.User;
 import xyz.lsl.vue.mapper.UserMapper;
 import xyz.lsl.vue.service.UserService;
@@ -25,12 +25,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserMapper userMapper;
 
     @Override
-    public List<getUserListVo> getUserList() {
+    public List<UserListVo> getUserList() {
         return userMapper.getUserList();
     }
 
     @Override
-    public List<getUserListVo> getUserListByUsername(String username) {
+    public List<UserListVo> getUserListByUsername(String username) {
         return userMapper.getUserListByUsername(username);
     }
 }

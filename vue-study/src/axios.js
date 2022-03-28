@@ -3,8 +3,8 @@ import router from "../src/router";
 import {Message} from "element-ui";
 
 let instance = axios.create({
-    baseURL:"https://localhost:8484/vue",
-    timeout:5000
+    baseURL: "http://localhost:8484/vue",
+    timeout: 5000
 })
 
 /*前置拦截*/

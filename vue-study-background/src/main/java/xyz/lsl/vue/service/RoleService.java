@@ -1,7 +1,7 @@
 package xyz.lsl.vue.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import xyz.lsl.vue.common.vo.roleVo.getRolesVo;
+import xyz.lsl.vue.common.vo.roleVo.RoleListVo;
 import xyz.lsl.vue.entity.Role;
 
 import java.util.List;
@@ -16,6 +16,6 @@ import java.util.List;
  */
 public interface RoleService extends IService<Role> {
 
-    List<getRolesVo> getRoles();
+    List<RoleListVo> getRoles();
 
 }
