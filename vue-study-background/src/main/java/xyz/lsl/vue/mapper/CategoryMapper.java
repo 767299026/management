@@ -1,7 +1,8 @@
 package xyz.lsl.vue.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import xyz.lsl.vue.common.vo.goodsVo.getGoodsCategoriesVo;
+import org.apache.ibatis.annotations.Param;
+import xyz.lsl.vue.common.vo.goodsVo.GoodsCategoriesVo;
 import xyz.lsl.vue.entity.Category;
 
 import java.util.List;
@@ -17,6 +18,11 @@ import java.util.List;
 public interface CategoryMapper extends BaseMapper<Category> {
 
     /*获取一级分类*/
-    List<getGoodsCategoriesVo> getLevelZero();
-    /**/
+    List<GoodsCategoriesVo> getLevelZero();
+
+    /*获取二级分类*/
+    List<GoodsCategoriesVo.goodsCategories> getLevelOne(@Param("pid") Integer categoryId);
+
+    /*获取二级分类*/
+    List<GoodsCategoriesVo.goodsCategories.children> getLevelTwo(@Param("pid") Integer categoryId);
 }

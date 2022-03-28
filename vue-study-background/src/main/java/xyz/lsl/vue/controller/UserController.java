@@ -10,9 +10,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import xyz.lsl.vue.common.vo.userVo.UserInfoVo;
+import xyz.lsl.vue.common.vo.userVo.UserListVo;
 import xyz.lsl.vue.common.vo.userVo.addUserVo;
 import xyz.lsl.vue.common.vo.userVo.allotRoleVo;
-import xyz.lsl.vue.common.vo.userVo.getUserListVo;
 import xyz.lsl.vue.entity.Role;
 import xyz.lsl.vue.entity.User;
 import xyz.lsl.vue.service.RoleService;
@@ -49,7 +49,7 @@ public class UserController {
                                   String query) {
         if (currentPage < 1 || pageSize < 1)
             return ResultUtil.fail("参数不合法，非法攻击将被封禁 IP");
-        List<getUserListVo> list;
+        List<UserListVo> list;
         if (StringUtils.isNotBlank(query))
             list = userService.getUserListByUsername(query);
         else

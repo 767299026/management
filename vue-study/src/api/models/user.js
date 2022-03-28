@@ -1,7 +1,7 @@
 import axios from "../../axios";
 
 export default {
-    /*获取菜单列表*/
+    /*获取用户列表*/
     getUerList(params) {
         return axios.get('/user/users',{ params: params })
     },

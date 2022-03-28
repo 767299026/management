@@ -4,8 +4,8 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-import xyz.lsl.vue.common.vo.permissionVo.getRightsTreeVo;
-import xyz.lsl.vue.common.vo.roleVo.getRolesVo;
+import xyz.lsl.vue.common.vo.permissionVo.RightsTreeVo;
+import xyz.lsl.vue.common.vo.roleVo.RoleListVo;
 import xyz.lsl.vue.entity.Role;
 import xyz.lsl.vue.mapper.PermissionMapper;
 import xyz.lsl.vue.mapper.RoleMapper;
@@ -35,8 +35,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     PermissionMapper permissionMapper;
 
     @Override
-    public List<getRolesVo> getRoles() {
-        List<getRolesVo> roles = new LinkedList<>();
+    public List<RoleListVo> getRoles() {
+        List<RoleListVo> roles = new LinkedList<>();
         List<String> level1 = permissionMapper.getAllPermission(1);//数据库全部一级权限
         List<String> level2 = permissionMapper.getAllPermission(2);//数据库全部二级权限
         List<String> level3 = permissionMapper.getAllPermission(3);//数据库全部三级权限
@@ -58,21 +58,21 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
                 if (psIds.contains(s))
                     permissionThree.add(s);
             }
-            getRolesVo getRolesVo = new getRolesVo();
-            BeanUtil.copyProperties(role, getRolesVo, "psIds", "psCa");
+            RoleListVo RoleListVo = new RoleListVo();
+            BeanUtil.copyProperties(role, RoleListVo, "psIds", "psCa");
             if (permissionOne.size() == 0 || permissionTwo.size() == 0) //没有任何权限
-                roles.add(getRolesVo);
+                roles.add(RoleListVo);
             else {
-                List<getRightsTreeVo> tops = permissionMapper.getPermissionTops(permissionOne);//获取一级权限
-                for (getRightsTreeVo top : tops) {//遍历一级权限
-                    List<getRightsTreeVo.permission> permissions = permissionMapper.getPermissions(permissionTwo, top.getId());//获取二级权限
-                    for (getRightsTreeVo.permission permission : permissions) {//遍历二级权限
+                List<RightsTreeVo> tops = permissionMapper.getPermissionTops(permissionOne);//获取一级权限
+                for (RightsTreeVo top : tops) {//遍历一级权限
+                    List<RightsTreeVo.permission> permissions = permissionMapper.getPermissions(permissionTwo, top.getId());//获取二级权限
+                    for (RightsTreeVo.permission permission : permissions) {//遍历二级权限
                         permission.setChildren(permissionMapper.getChildren(permissionThree, permission.getId()));//获取并填充三级权限
                     }
                     top.setChildren(permissions);//填充二级权限
                 }
-                getRolesVo.setChildren(tops);
-                roles.add(getRolesVo);
+                RoleListVo.setChildren(tops);
+                roles.add(RoleListVo);
             }
         }
         return roles;

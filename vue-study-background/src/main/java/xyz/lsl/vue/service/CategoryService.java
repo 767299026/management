@@ -1,7 +1,7 @@
 package xyz.lsl.vue.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import xyz.lsl.vue.common.vo.goodsVo.getGoodsCategoriesVo;
+import xyz.lsl.vue.common.vo.goodsVo.GoodsCategoriesVo;
 import xyz.lsl.vue.entity.Category;
 
 import java.util.List;
@@ -16,5 +16,5 @@ import java.util.List;
  */
 public interface CategoryService extends IService<Category> {
 
-    List<getGoodsCategoriesVo> categories();
+    List<GoodsCategoriesVo> categories(Integer type);
 }

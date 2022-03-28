@@ -3,7 +3,7 @@ package xyz.lsl.vue.common.vo.roleVo;
 import lombok.Data;
 
 @Data
-public class RoleInfo {
+public class RoleInfoVo {
 
     private Integer roleId;
     private String roleName;

@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class getUserListVo {
+public class UserListVo {
 
     private Integer id;
     private String username;

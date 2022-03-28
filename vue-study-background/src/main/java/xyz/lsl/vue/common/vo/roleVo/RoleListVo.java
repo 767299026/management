@@ -1,17 +1,17 @@
 package xyz.lsl.vue.common.vo.roleVo;
 
 import lombok.Data;
-import xyz.lsl.vue.common.vo.permissionVo.getRightsTreeVo;
+import xyz.lsl.vue.common.vo.permissionVo.RightsTreeVo;
 
 import java.util.List;
 
 @Data
-public class getRolesVo {
+public class RoleListVo {
 
     private Integer roleId;
     private String roleName;
     private String roleDesc;
-    private List<getRightsTreeVo> children;
+    private List<RightsTreeVo> children;
 
 }
 

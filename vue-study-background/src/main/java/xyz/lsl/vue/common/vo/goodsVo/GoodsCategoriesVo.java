@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class getGoodsCategoriesVo {
+public class GoodsCategoriesVo {
 
     private Integer categoryId;
     private String categoryName;
@@ -16,6 +16,7 @@ public class getGoodsCategoriesVo {
 
     @Data
     public static class goodsCategories {
+
         private Integer categoryId;
         private String categoryName;
         private Integer parentId;
@@ -25,6 +26,7 @@ public class getGoodsCategoriesVo {
 
         @Data
         public static class children {
+
             private Integer categoryId;
             private String categoryName;
             private Integer parentId;
