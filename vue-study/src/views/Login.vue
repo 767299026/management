@@ -62,7 +62,7 @@ export default {
           Message.success(res.data.msg)
           const token = res.headers['authorization']
             window.localStorage.setItem("token", token)
-            window.sessionStorage.setItem("userInfo", JSON.stringify(res.data.data))
+            window.localStorage.setItem("userInfo", JSON.stringify(res.data.data))
             this.$router.push("/home");
         })
       });

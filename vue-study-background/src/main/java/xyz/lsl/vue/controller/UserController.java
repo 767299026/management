@@ -22,6 +22,7 @@ import xyz.lsl.vue.util.ResultUtil;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -49,11 +50,19 @@ public class UserController {
                                   String query) {
         if (currentPage < 1 || pageSize < 1)
             return ResultUtil.fail("参数不合法，非法攻击将被封禁 IP");
-        List<UserListVo> list;
+        List<UserListVo> list = new LinkedList<>();
         if (StringUtils.isNotBlank(query))
             list = userService.getUserListByUsername(query);
-        else
-            list = userService.getUserList();
+        else {
+            LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.orderByAsc(User::getCreateTime);
+            List<User> users = userService.list(queryWrapper);
+            for (User user : users) {
+                UserListVo userVo = new UserListVo();
+                BeanUtils.copyProperties(user, userVo);
+                list.add(userVo);
+            }
+        }
         int size = list.size();
         Page page = new Page(currentPage,pageSize);
         if(size == 0)

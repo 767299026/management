@@ -76,7 +76,7 @@ export default {
   created() {
     this.getMenuList()
     this.activePath = window.sessionStorage.getItem("activePath")
-    this.UserInfo = JSON.parse(window.sessionStorage.getItem("userInfo"))
+    this.UserInfo = JSON.parse(window.localStorage.getItem("userInfo"))
   },
   methods: {
     getMenuList() {

@@ -18,7 +18,5 @@ import java.util.List;
 @Transactional
 public interface UserService extends IService<User> {
 
-    List<UserListVo> getUserList();
-
     List<UserListVo> getUserListByUsername(String username);
 }

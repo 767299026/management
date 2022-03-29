@@ -254,10 +254,13 @@ export default {
       }
     },
     editCategory() {//axios编辑分类请求
-      this.$axios.editGoodsCategory(this.editForm).then((res) => {
-        this.editCategoryDialogVisible = false
-        this.getGoodsCategories()
-        Message.success(res.data.msg)
+      this.$refs.editCategoryFormRef.validate(valid => {
+        if (!valid) return
+        this.$axios.editGoodsCategory(this.editForm).then((res) => {
+          this.editCategoryDialogVisible = false
+          this.getGoodsCategories()
+          Message.success(res.data.msg)
+        })
       })
     },
     confirmDeleteCategory(id) {//确认删除分类

@@ -27,20 +27,20 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     @Override
     public List<GoodsCategoriesVo> categories(Integer type) {
         List<GoodsCategoriesVo> levelZero = categoryMapper.getLevelZero();//一级分类
-        if (type == 1)
-            return levelZero;
         List<GoodsCategoriesVo.goodsCategories> levelOne;//二级分类
-        if (type == 2) {
-            for (GoodsCategoriesVo zero : levelZero) {
-                levelOne = categoryMapper.getLevelOne(zero.getCategoryId());
-                zero.setChildren(levelOne);
-            }
-        } else {
+        if (type == null || type == 3) {
             for (GoodsCategoriesVo zero : levelZero) {
                 levelOne = categoryMapper.getLevelOne(zero.getCategoryId());
                 for (GoodsCategoriesVo.goodsCategories one : levelOne) {
                     one.setChildren(categoryMapper.getLevelTwo(one.getCategoryId()));//三级分类
                 }
+                zero.setChildren(levelOne);
+            }
+        } else if (type == 1)
+            return levelZero;
+        else {
+            for (GoodsCategoriesVo zero : levelZero) {
+                levelOne = categoryMapper.getLevelOne(zero.getCategoryId());
                 zero.setChildren(levelOne);
             }
         }

@@ -2,6 +2,10 @@ import axios from "../../axios";
 
 export default {
     /*获取分类列表*/
+    Categories() {
+        return axios.get('/category/cate')
+    },
+    /*获取分类列表*/
     getCategories(params) {
         return axios.get('/category/cate', {params: params})
     },
@@ -15,14 +19,14 @@ export default {
     },
     /*添加分类*/
     addGoodsCategory(params) {
-        return axios.post('category/add', params)
+        return axios.post('/category/add', params)
     },
     /*编辑分类*/
     editGoodsCategory(params) {
-        return axios.put('category/edit', params)
+        return axios.put('/category/edit', params)
     },
     /*删除分类*/
     deleteGoodsCategory(id) {
-        return axios.delete('category/delete/' + id)
-    }
+        return axios.delete('/category/delete/' + id)
+    },
 }

@@ -14,19 +14,6 @@
         <result column="role" property="role"/>
     </resultMap>
 
-    <select id="getUserList" resultType="xyz.lsl.vue.common.vo.userVo.UserListVo">
-        select id,
-               username,
-               avatar,
-               email,
-               status,
-               create_time,
-               update_time,
-               role
-        from user
-        order by create_time
-    </select>
-
     <select id="getUserListByUsername" resultType="xyz.lsl.vue.common.vo.userVo.UserListVo">
         select id,
                username,

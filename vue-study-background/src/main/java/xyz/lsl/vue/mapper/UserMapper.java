@@ -17,9 +17,6 @@ import java.util.List;
  */
 public interface UserMapper extends BaseMapper<User> {
 
-    /*获取用户列表*/
-    List<UserListVo> getUserList();
-
     /*根据用户名查询用户*/
     List<UserListVo> getUserListByUsername(@Param("username") String username);
 }
