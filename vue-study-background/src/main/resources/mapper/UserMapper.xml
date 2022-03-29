@@ -15,14 +15,7 @@
     </resultMap>
 
     <select id="getUserListByUsername" resultType="xyz.lsl.vue.common.vo.userVo.UserListVo">
-        select id,
-               username,
-               avatar,
-               email,
-               status,
-               create_time,
-               update_time,
-               role
+        select id, username, avatar, email, status, create_time, update_time, role
         from user
         where username like concat('%', #{username}, '%')
         order by create_time
