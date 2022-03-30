@@ -8,6 +8,7 @@ import rights from "../components/rights/rights";
 import roles from "../components/rights/roles";
 import cate from "../components/goods/cate";
 import params from "../components/goods/params";
+import order from "../components/order/order";
 
 Vue.use(VueRouter)
 
@@ -57,6 +58,11 @@ const routes = [
                 path: '/params',
                 component: params
             },
+            {
+                name:order,
+                path: '/orders',
+                component: order
+            }
         ]
   }
 ]
