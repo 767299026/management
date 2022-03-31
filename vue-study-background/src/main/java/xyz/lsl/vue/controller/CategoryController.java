@@ -3,6 +3,7 @@ package xyz.lsl.vue.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import xyz.lsl.vue.common.vo.goodsVo.CategoryInfoVo;
@@ -31,6 +32,7 @@ public class CategoryController {
     @Resource
     private CategoryService categoryService;
 
+    @RequiresPermissions("商品分类")
     @GetMapping("/cate")
     public ResultUtil getGoodsCategories(Integer currentPage,
                                          Integer pageSize,
@@ -64,6 +66,7 @@ public class CategoryController {
         }
     }
 
+    @RequiresPermissions("获取分类详情")
     @GetMapping("/cate/{id}")
     public ResultUtil getCategory(@PathVariable(name = "id") Integer id) {
         Category category = categoryService.getById(id);
@@ -87,6 +90,7 @@ public class CategoryController {
         return ResultUtil.success("获取分类信息成功", categoriesVo);
     }
 
+    @RequiresPermissions("添加分类")
     @PostMapping("/add")
     public ResultUtil addCategory(@RequestBody GoodsCategoriesVo addCategoryVo) {
         Category category = new Category();
@@ -101,6 +105,7 @@ public class CategoryController {
         return ResultUtil.success("添加分类成功", null);
     }
 
+    @RequiresPermissions("添加分类")
     @PutMapping("/edit")
     public ResultUtil editCategory(@RequestBody CategoryInfoVo editCategoryVo) {
         Category category = categoryService.getById(editCategoryVo.getCategoryId());
@@ -118,6 +123,7 @@ public class CategoryController {
         return ResultUtil.success("修改分类成功", null);
     }
 
+    @RequiresPermissions("删除分类")
     @DeleteMapping("/delete/{id}")
     public ResultUtil deleteCategory(@PathVariable(name = "id") Integer id) {
         Category category = categoryService.getById(id);

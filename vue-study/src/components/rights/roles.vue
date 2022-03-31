@@ -63,7 +63,7 @@
     </el-card>
 
     <!--添加角色对话框-->
-    <el-dialog title="添加用户" :visible.sync="addRoleDialogVisible" width="50%" @click="resetAddRoleForm()">
+    <el-dialog title="添加角色" :visible.sync="addRoleDialogVisible" width="50%" @click="resetAddRoleForm()">
       <el-form :model="addForm" :rules="addFormRules" ref="addRoleFormRef" label-width="70px">
         <el-form-item label="角色名称" label-width="80px" prop="roleName">
           <el-input v-model="addForm.roleName"/>
@@ -79,7 +79,7 @@
     </el-dialog>
 
     <!--编辑角色对话框-->
-    <el-dialog title="编辑用户" :visible.sync="editRoleDialogVisible" width="50%" @click="resetEditRoleForm()">
+    <el-dialog title="编辑角色" :visible.sync="editRoleDialogVisible" width="50%" @click="resetEditRoleForm()">
       <el-form :model="editForm" :rules="editFormRules" ref="editRoleFormRef" label-width="70px">
         <el-form-item label="roleId" prop="roleName">
           <el-input v-model="editForm.roleId" disabled/>
@@ -176,7 +176,7 @@ export default {
       this.$refs.addRoleFormRef.validate(valid => {
         if (!valid) return
         this.$axios.addRoles(this.addForm).then((res) => {
-          this.addUserDialogVisible = false
+          this.addRoleDialogVisible = false
           this.getRoles()
           Message.success(res.data.msg)
         })
@@ -188,7 +188,7 @@ export default {
     },
     showEditRoleDialogVisible(roleId) {//axios获取角色对话框信息
       this.resetEditRoleForm()
-      this.$axios.getRoleInfoVo(roleId).then((res) => {
+      this.$axios.getRoleInfo(roleId).then((res) => {
         this.editForm = res.data.data
         this.editRoleDialogVisible = true
         Message.success(res.data.msg)

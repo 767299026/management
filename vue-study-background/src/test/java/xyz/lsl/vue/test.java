@@ -3,31 +3,33 @@ package xyz.lsl.vue;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import xyz.lsl.vue.entity.User;
-import xyz.lsl.vue.service.OrderService;
 
-import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @SpringBootTest
 public class test {
 
-    @Resource
-    private OrderService orderService;
+    /*@Resource
+    private GoodsService goodsService;*/
 
     @Test
     void changeDate() {
-        /*List<Order> list = orderService.list();
-        for (Order order : list) {
-            Timestamp time1 = new Timestamp(order.getCreateTime());
+        /*List<Goods> list = goodsService.list();
+        for (Goods goods : list) {
+            Timestamp time1 = new Timestamp(goods.getAddTime());
             LocalDateTime create = time1.toLocalDateTime();
-            order.setTime1(create);
-            Timestamp time2 = new Timestamp(order.getCreateTime());
+            goods.setCreateTime(create);
+            Timestamp time2 = new Timestamp(goods.getUpdTime());
             LocalDateTime update = time2.toLocalDateTime();
-            order.setTime2(update);
-            orderService.saveOrUpdate(order);
+            goods.setUpdateTime(update);
+            if(goods.getDeleteTime()!=null){
+                Timestamp time3 = new Timestamp(goods.getDeleteTime());
+                LocalDateTime delete = time3.toLocalDateTime();
+                goods.setDeleteDate(delete);
+            }
+            goodsService.saveOrUpdate(goods);
         }*/
-
     }
 
     @Test

@@ -70,7 +70,7 @@ export default {
       },
       isCollapsed: false,
       activePath: '',
-      UserInfo: {}
+      UserInfo: {},
     }
   },
   created() {
@@ -91,7 +91,7 @@ export default {
     saveNavState(activePath){
        window.sessionStorage.setItem("activePath",activePath)
       this.activePath = activePath
-    }
+    },
   }
 }
 </script>

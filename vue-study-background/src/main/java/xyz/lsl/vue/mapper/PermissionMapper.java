@@ -30,6 +30,9 @@ public interface PermissionMapper extends BaseMapper<Permission> {
     //获取所有权限
     List<String> getAllPermission(@Param("level") Integer level);
 
+    //获取权限名称
+    String getAllPermissionName(@Param("psId") Integer id);
+
     //获取一级权限
     List<RightsTreeVo> getPermissionTops(@Param("tops") List<String> tops);
 

@@ -248,7 +248,7 @@ export default {
       })
     },
     editAttribute() {//axios编辑参数请求
-      this.$refs.addAttributeFormRef.validate(valid => {
+      this.$refs.editAttributeFormRef.validate(valid => {
         if (!valid) return
         this.$axios.editAttributes(this.editForm).then((res) => {
           this.editAttributeDialogVisible = false

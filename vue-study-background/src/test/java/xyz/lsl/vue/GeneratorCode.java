@@ -24,7 +24,7 @@ public class GeneratorCode {
 
         List<String> tableName = new ArrayList<>();//表名
         /*要生产的表名*/
-        tableName.add("order");
+        tableName.add("goods");
 
         String logicDelete = "";
 

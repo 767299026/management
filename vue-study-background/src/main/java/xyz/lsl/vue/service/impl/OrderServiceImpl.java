@@ -6,6 +6,7 @@ import xyz.lsl.vue.entity.Order;
 import xyz.lsl.vue.mapper.OrderMapper;
 import xyz.lsl.vue.service.OrderService;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -19,8 +20,11 @@ import java.util.List;
 @Service
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements OrderService {
 
+    @Resource
+    private OrderMapper orderMapper;
+
     @Override
     public List<Order> getOrders(String query) {
-        return null;
+        return orderMapper.getOrdersByOderNumber(query);
     }
 }

@@ -9,7 +9,9 @@ let instance = axios.create({
 
 /*前置拦截*/
 instance.interceptors.request.use(config => {
-    config.headers.Authorization = window.localStorage.getItem("token")
+    const token = window.localStorage.getItem("token")
+    if (token != null)
+        config.headers.Authorization = token
     return config
 })
 
@@ -31,6 +33,7 @@ instance.interceptors.response.use(response => {
         }
         // 根据请求状态觉得是否登录或者提示其他
         if (error.response.status === 401||error.response.status === 500) {
+            window.localStorage.removeItem("token")
             window.localStorage.removeItem("userInfo")
             router.push({
                 path: '/login'
@@ -46,6 +49,7 @@ instance.interceptors.response.use(response => {
             duration: 3 * 1000
         })
         return Promise.reject(error)
-})
+}
+)
 
 export default instance

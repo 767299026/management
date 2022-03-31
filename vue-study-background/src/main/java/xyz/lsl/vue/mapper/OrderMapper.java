@@ -1,7 +1,10 @@
 package xyz.lsl.vue.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 import xyz.lsl.vue.entity.Order;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import xyz.lsl.vue.entity.Order;
  */
 public interface OrderMapper extends BaseMapper<Order> {
 
+    List<Order> getOrdersByOderNumber(@Param("orderNumber") String orderNumber);
 }

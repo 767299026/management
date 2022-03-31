@@ -75,6 +75,12 @@
         where ps_level = #{level}
     </select>
 
+    <select id="getAllPermissionName" resultType="java.lang.String">
+        select ps_name
+        from permission
+        where ps_id = #{psId}
+    </select>
+
     <select id="getPermissionTops" resultMap="getRolesVoPermissionTopMap">
         select main.ps_id,api.id,ps_name,ps_api_path
         from permission as main,permission_api as api

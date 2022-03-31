@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import * as echarts from 'echarts'
 import _ from 'lodash'
+import * as echarts from "echarts";
 
 export default {
   name: "report",

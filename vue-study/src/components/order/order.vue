@@ -10,8 +10,8 @@
     <el-card>
       <el-row>
         <el-col :span="8">
-          <el-input placeholder="请输入内容" clearable>
-            <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-input  v-model="queryInfo.query" placeholder="请输入内容" clearable>
+            <el-button slot="append" icon="el-icon-search" @click="getOrderList()"></el-button>
           </el-input>
         </el-col>
       </el-row>
@@ -50,10 +50,10 @@
     <!--修改地址对话框-->
     <el-dialog title="修改地址" :visible.sync="editAddressDialogVisible" width="50%" @close="resetEditAddressForm()">
       <el-form :model="editForm" :rules="editFormRules" ref="editAddressFormRef" label-width="70px">
-        <el-form-item label="省市区县" prop="area">
+        <el-form-item label="省市区县" prop="area" label-width="80px">
           <el-cascader :options="cityData" v-model="editForm.area" />
         </el-form-item>
-        <el-form-item label="详细地址" prop="address">
+        <el-form-item label="详细地址" prop="address" label-width="80px">
           <el-input v-model="editForm.address"/>
         </el-form-item>
       </el-form>

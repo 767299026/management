@@ -9,7 +9,9 @@ import roles from "../components/rights/roles";
 import cate from "../components/goods/cate";
 import params from "../components/goods/params";
 import order from "../components/order/order";
-import report from "@/components/report/report";
+import report from "../components/report/report";
+import list from "../components/goods/list";
+import addGoods from "../components/goods/addGoods";
 
 Vue.use(VueRouter)
 
@@ -60,6 +62,16 @@ const routes = [
                 component: params
             },
             {
+                name: list,
+                path: '/goods',
+                component: list
+            },
+            {
+                name: addGoods,
+                path: '/goods/add',
+                component: addGoods
+            },
+            {
                 name:order,
                 path: '/orders',
                 component: order
@@ -74,7 +86,9 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes
+    mode: 'hash',
+    base: process.env.BASE_URL,
+    routes
 })
 
 export default router

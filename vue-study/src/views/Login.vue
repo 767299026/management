@@ -1,21 +1,21 @@
 <template>
   <div id="login" class="login_container">
-    <img src="../static/fracture.webp" alt="facture.webp">
+    <img src="https://cdn.xian-yun.xyz/static/blog/fracture.webp" alt="facture.webp">
     <div class="login_box">
       <!--头像区域-->
       <div class="avatar_box">
-        <img src="../static/avatar.jpg" alt="avatar.jpg">
+        <img src="https://cdn.xian-yun.xyz/static/blog/avatar/1.jpg" alt="avatar.jpg">
       </div>
       <!--表单区域-->
       <div>
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" label-width="0px" class="login_form">
           <!--用户名-->
           <el-form-item prop="username">
-            <el-input v-model="loginForm.username" prefix-icon="el-icon-user-solid"/>
+            <el-input placeholder="visitor" v-model="loginForm.username" prefix-icon="el-icon-user-solid"/>
           </el-form-item>
           <!--密码-->
           <el-form-item prop="password">
-            <el-input v-model="loginForm.password" prefix-icon="el-icon-lock" type="password"/>
+            <el-input placeholder="123456" v-model="loginForm.password" prefix-icon="el-icon-lock" type="password"/>
           </el-form-item>
           <!--按钮-->
           <el-form-item class="btns">

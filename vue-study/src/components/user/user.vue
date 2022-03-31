@@ -107,7 +107,7 @@
     </el-dialog>
 
     <!--分配角色对话框-->
-    <el-dialog title="编辑用户" :visible.sync="distributeDialogVisible" width="50%"
+    <el-dialog title="分配角色" :visible.sync="distributeDialogVisible" width="50%"
                @close="userInfo = {};roleList = [];selectedRoleId = ''">
       <div>
         <p>当前的用户：{{ userInfo.username }}</p>

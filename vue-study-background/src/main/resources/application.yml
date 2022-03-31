@@ -23,7 +23,21 @@ yiqu:
   jwt:
     # 部署上线务必修改此配置，以保证token的安全性
     secret: nihao!@#$%^&*123456
-    expire: 172800
+    expire: 28800
     header: token
 
+#fdfs文件系统
+fdfs:
+  connect-timeout: 600
+  so-timeout: 1500
+  thumb-image:
+    height: 150
+    width: 150
+  tracker-list:
 
+#shiro包中redis-jedis连接主机配置
+shiro:
+  redis:
+    redisHost:
+    password:
+    databaseIndex:

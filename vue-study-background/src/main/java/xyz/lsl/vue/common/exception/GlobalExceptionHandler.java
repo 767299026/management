@@ -1,7 +1,8 @@
 package xyz.lsl.vue.common.exception;
 
 import lombok.extern.slf4j.Slf4j;
-
+import org.apache.shiro.ShiroException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -29,22 +30,22 @@ public class GlobalExceptionHandler {
     /**
      * 捕捉shiro的授权异常
      */
-    /*@ExceptionHandler(value = UnauthorizedException.class)
+    @ExceptionHandler(value = UnauthorizedException.class)
     @ResponseBody
     public ResultUtil jsonExceptionHandler(HttpServletRequest req, Exception e) {
         log.error("权限不足:-------------->{}", e.getMessage());
         return ResultUtil.fail(403, "权限不足",null);
-    }*/
+    }
 
     /**
      * 捕捉shiro的认证异常
      */
-    /*@ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(ShiroException.class)
     public ResultUtil handle401(ShiroException e) {
         log.error("未登录访问:-------------->{}", e.getMessage());
         return ResultUtil.fail(401, e.getMessage(), null);
-    }*/
+    }
 
     /**
      * 处理Assert的异常

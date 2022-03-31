@@ -6,6 +6,7 @@ import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +45,7 @@ public class UserController {
     @Resource
     private RoleService roleService;
 
+    @RequiresPermissions("用户列表")
     @GetMapping("/users")
     public ResultUtil getUserList(@RequestParam(defaultValue = "1") Integer currentPage,
                                   @RequestParam(defaultValue = "4") Integer pageSize,
@@ -83,6 +85,7 @@ public class UserController {
         return ResultUtil.success("获取当前页用户信息成功",page);
     }
 
+    @RequiresPermissions("获取用户详情")
     @GetMapping("/getUserInfo/{id}")
     public ResultUtil getUserInfo(@PathVariable(name = "id")Integer id){
         UserInfoVo getUserInfoVo = new UserInfoVo();
@@ -90,6 +93,7 @@ public class UserController {
         return ResultUtil.success("获取用户信息成功",getUserInfoVo);
     }
 
+    @RequiresPermissions("设置管理状态")
     @PutMapping("/changeStatus/{id}")
     public ResultUtil changeUserStatus(@PathVariable(name = "id")Integer id){
         if(id < 1)
@@ -105,6 +109,7 @@ public class UserController {
         return ResultUtil.success("更新用户状态成功",null);
     }
 
+    @RequiresPermissions("添加用户")
     @PostMapping("/add")
     public ResultUtil addUser(@RequestBody addUserVo addUserVo) {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
@@ -125,6 +130,7 @@ public class UserController {
         return ResultUtil.success("新增用户成功", null);
     }
 
+    @RequiresPermissions("更新用户")
     @PutMapping("/edit")
     public ResultUtil editUser(@RequestBody UserInfoVo editUserVo){
         User user = userService.getById(editUserVo.getId());
@@ -135,12 +141,14 @@ public class UserController {
         return ResultUtil.success("修改用户信息成功", null);
     }
 
+    @RequiresPermissions("删除用户")
     @DeleteMapping("/delete/{id}")
     public ResultUtil deleteUser(@PathVariable(name = "id") Integer id) {
         userService.removeById(id);
         return ResultUtil.success("已移除该用户", null);
     }
 
+    @RequiresPermissions("分配用户角色")
     @PutMapping("/allotRole")
     public ResultUtil allotRole(@RequestBody allotRoleVo allotRoleVo) {
         User user = allotRoleVo.getUserInfo();
