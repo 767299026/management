@@ -47,11 +47,14 @@ public class ShiroConfig {
 
     @Bean
     public SessionManager sessionManager(RedisSessionDAO redisSessionDAO) {
+        RedisManager redisManager = new RedisManager();
+        redisManager.setHost(redisHost);
+        redisManager.setPassword(password);
+        redisManager.setDatabase(databaseIndex);
+        redisSessionDAO.setRedisManager(redisManager);
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-
         // inject redisSessionDAO
         sessionManager.setSessionDAO(redisSessionDAO);
-
         return sessionManager;
     }
 

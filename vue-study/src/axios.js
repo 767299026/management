@@ -3,7 +3,7 @@ import router from "../src/router";
 import {Message} from "element-ui";
 
 let instance = axios.create({
-    baseURL: "http://localhost:8484/vue",
+    baseURL: "https://localhost:8484/electricity",
     timeout: 5000
 })
 
